@@ -1,6 +1,6 @@
 //*************************************MISC VARIABLES AND FUNCTIONS
 
-//score keepers
+//enemy and player score keepers
 var playerScore = 0;
 var enemyScore = 0;
 
