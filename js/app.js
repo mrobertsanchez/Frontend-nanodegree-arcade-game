@@ -12,7 +12,7 @@ function randomNumber() {
 //*************************************ENEMIES AND THEIR EVIL FUNCTIONS
 var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
-    //x, y coordinates,
+    //x, y coordinates, y coordinates ,
     this.x = -100;
     if(randomNumber() === 0) {
       this.y = 60;
@@ -37,6 +37,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x >= this.xOffScreen){
       this.reset();
     }
+    //checks for collision between heroic player and enemy bug
     collisionCheck(this);
 };
 
@@ -62,11 +63,12 @@ Enemy.prototype.reset = function() {
 
 var collisionCheck = function(bugEnemy) {
     // check for collision between bug enemies and the heroic player
+    // if a collision occurs enemy score is updated and player is reset
     if (
-        player.y + 130 >= bugEnemy.y + 89
-        && player.x + 25 <= bugEnemy.x + 88
-        && player.y + 73 <= bugEnemy.y + 135
-        && player.x + 76 >= bugEnemy.x + 11) {
+        player.y + 130 >= bugEnemy.y + 90
+        && player.x + 25 <= bugEnemy.x + 90
+        && player.y + 75 <= bugEnemy.y + 135
+        && player.x + 75 >= bugEnemy.x + 10) {
         enemyScore +=1;
         ctx.fillText(("Enemy Score: " + enemyScore), 250, 100);
         player.reset();
@@ -76,8 +78,6 @@ var collisionCheck = function(bugEnemy) {
 //*************************************THE PLAYER AND HIS HEROIC FUNCTIONS
 
 var Player = function() {
-  // This class requires an update(), render() and
-  // a handleInput() method.
   this.sprite = 'images/char-boy.png'
   //player starting position
   this.x = 200;
@@ -106,14 +106,15 @@ Player.prototype.reset = function() {
 };
 
 Player.prototype.update = function() {
-	// If the player reaches the water
+	// If the player reaches the water, Hero Sprite resets to original postition
+  // Player Score Updates with new score
 	  if (player.y < 20) {
       playerScore += 1;
       ctx.fillText(("Player Score: " + playerScore), 10, 100);
 	    this.reset();
     }
 };
-
+// This renders the Hero Sprite, Player Score and Enemy Score
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     ctx.font = "30px 'Rammetto One', cursive";
