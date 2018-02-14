@@ -14,6 +14,8 @@ Any web browser (i.e. Internet Explorer, Firefox, Chrome)
 
 Download all files to one folder and open the html document titled "index.html" in your preferred web browser.
 
+Alternatively you may visit this [link](https://mrobertsanchez.github.io/Frontend-nanodegree-arcade-game/) to play in your preferred browser.
+
 ## Objectives and How to Play
 
 Your objective is to see how many times you can cross the open grass field without colliding with an enemy bug by moving the Hero with your arrow keys.

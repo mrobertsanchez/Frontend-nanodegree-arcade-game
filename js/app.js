@@ -6,28 +6,32 @@ var enemyScore = 0;
 
 //random number generation from 0 to 2 to randomize enemy starting y location upon enemy reset off screen
 function randomNumber() {
+  'use strict';
   return Math.floor(Math.random()*Math.floor(3));
-};
+}
 
 //*************************************ENEMIES AND THEIR EVIL FUNCTIONS
 var Enemy = function() {
+    'use strict';
     this.sprite = 'images/enemy-bug.png';
-    //x, y coordinates, y coordinates ,
+    //x, y coordinates, y coordinates are randomized to three different locations
     this.x = -100;
-    if(randomNumber() === 0) {
-      this.y = 60;
-    }
-    else if (randomNumber() < 1) {
-      this.y = 140;
-    }
-    else {
-      this.y = 230;
+    switch (randomNumber()) {
+      case 0:
+        this.y = 60;
+        break;
+      case 1:
+        this.y = 140;
+        break;
+      default:
+        this.y = 230;
     }
     //random enemey speed
     this.speed = Math.floor(Math.random() * 100) + 150;
 };
 
 Enemy.prototype.update = function(dt) {
+    'use strict';
     //enemy movement
     this.x = this.x + this.speed * dt;
     //off screen and starting x postions
@@ -38,39 +42,42 @@ Enemy.prototype.update = function(dt) {
       this.reset();
     }
     //checks for collision between heroic player and enemy bug
-    collisionCheck(this);
+    this.collisionCheck();
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
+    'use strict';
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 //reset function to reposition off screen bug to a random starting location with a random speed
 Enemy.prototype.reset = function() {
+    'use strict';
     this.x = -100;
-    if(randomNumber() === 0) {
-      this.y = 60;
-    }
-    else if (randomNumber() < 1) {
-      this.y = 140;
-    }
-    else {
-      this.y = 230;
+    switch (randomNumber()) {
+      case 0:
+        this.y = 60;
+        break;
+      case 1:
+        this.y = 140;
+        break;
+      default:
+        this.y = 230;
     }
     this.speed = Math.floor(Math.random() * 100) + 100;
 };
 
-var collisionCheck = function(bugEnemy) {
+Enemy.prototype.collisionCheck = function() {
+    'use strict';
     // check for collision between bug enemies and the heroic player
     // if a collision occurs enemy score is updated and player is reset
     if (
-        player.y + 130 >= bugEnemy.y + 90
-        && player.x + 25 <= bugEnemy.x + 90
-        && player.y + 75 <= bugEnemy.y + 135
-        && player.x + 75 >= bugEnemy.x + 10) {
+        player.y + 130 >= this.y + 90 &&
+        player.x + 25 <= this.x + 90 &&
+        player.y + 75 <= this.y + 135 &&
+        player.x + 75 >= this.x + 10) {
         enemyScore +=1;
-        ctx.fillText(("Enemy Score: " + enemyScore), 250, 100);
         player.reset();
       }
 };
@@ -78,13 +85,15 @@ var collisionCheck = function(bugEnemy) {
 //*************************************THE PLAYER AND HIS HEROIC FUNCTIONS
 
 var Player = function() {
-  this.sprite = 'images/char-boy.png'
+  'use strict';
+  this.sprite = 'images/char-boy.png';
   //player starting position
   this.x = 200;
   this.y = 400;
 };
 
 Player.prototype.handleInput = function(direction) {
+      'use strict';
     if(direction == 'left' && this.x > 0) {
         this.x -= 50;
     }
@@ -101,21 +110,23 @@ Player.prototype.handleInput = function(direction) {
 
 //resets player position to starting position
 Player.prototype.reset = function() {
+      'use strict';
     this.x = 200;
     this.y = 420;
 };
 
 Player.prototype.update = function() {
+      'use strict';
 	// If the player reaches the water, Hero Sprite resets to original postition
   // Player Score Updates with new score
-	  if (player.y < 20) {
+	  if (this.y < 20) {
       playerScore += 1;
-      ctx.fillText(("Player Score: " + playerScore), 10, 100);
 	    this.reset();
     }
 };
 // This renders the Hero Sprite, Player Score and Enemy Score
 Player.prototype.render = function() {
+      'use strict';
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     ctx.font = "30px 'Rammetto One', cursive";
     ctx.fillText(("Player Score: " + playerScore), 10, 100);
