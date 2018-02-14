@@ -96,15 +96,19 @@ Player.prototype.handleInput = function(direction) {
       'use strict';
     if(direction == 'left' && this.x > 0) {
         this.x -= 50;
+        this.update();
     }
     if(direction == 'right' && this.x < 400) {
         this.x += 50;
+        this.update();
     }
     if(direction == 'up' && this.y > 3) {
         this.y -= 50;
+        this.update();
     }
     if(direction == 'down' && this.y < 400) {
         this.y += 50;
+        this.update();
     }
 };
 
